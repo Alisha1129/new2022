@@ -12,32 +12,10 @@ function Login() {
   const [bttn, setBttn] = useState('');
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(null);
 
 
 
-  useEffect(() => {
-    fetch("https://d28c5850.eu-gb.apigw.appdomain.cloud/eadv/token", {
-            method: 'Post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            //body: JSON.stringify({user: data})
-          })
-      .then(res => res.json())
-      .then(
-        (result) => {
-        console.log(result)
-          setIsLoaded(true);
-          setItems(result);
-        },
-        (error) => {
-            console.log(error)
-          setIsLoaded(true);
-          setError(error);
-        }
-      )
-  }, [])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,6 +34,14 @@ function Login() {
     .then(res => res.json())
     .then(
       (result) => {
+
+        if(result.statusCode === 400){
+          setLoginError({msg:result.message,type:"danger" })
+        }else{
+          setLoginError({msg:"Successfully Login", type:"success"})
+          localStorage.setItem('apiKey',result.accessToken)
+          navigate('/profile', {replace: true})
+        }
       console.log(result)
         setIsLoaded(true);
         setItems(result);
@@ -73,6 +59,13 @@ function Login() {
   return (
     <>
       <div className="container">
+
+{loginError &&
+  <div className={"alert alert-" + loginError.type} role="alert">
+  {loginError.msg}
+</div>
+}
+
         <div className="row">
           <div className='col-4'>
 
@@ -85,8 +78,8 @@ function Login() {
               <div className='alisha'>
                 <div className='row'>
                   <div className="col-12">
-                    <label htmlfor="inputEmail3" className="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
+                    <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Email</label>
+                    <div className="col-sm-10">
                       <input type="email" value={username} onChange={(e) => setUserName(e.target.value)} className="form-control" id="inputEmail3" />
                     </div>
                   </div>
@@ -95,8 +88,8 @@ function Login() {
 
               <div className="row">
                 <div className='col-12'>
-                  <label htmlfor="inputPassword3" className="col-sm-2 col-form-label">Password</label>
-                  <div class="col-sm-10">
+                  <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">Password</label>
+                  <div className="col-sm-10">
                     <input type="password"  value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="inputPassword3" />
                   </div>
                 </div>

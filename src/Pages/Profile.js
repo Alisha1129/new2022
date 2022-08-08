@@ -1,7 +1,33 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { Navigate } from 'react-router-dom'
+
 
 
 function Profile() {
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+
+
+
+  useEffect(() =>{
+
+    const apiKey = localStorage.getItem('apiKey')
+    if(apiKey){
+      console.log("inside")
+      setIsLoggedIn(apiKey)
+    }
+
+  },[isLoggedIn]
+  )
+
+  if(!isLoggedIn){
+    console.log(isLoggedIn)
+    return <Navigate replace to="/login" />
+
+
+  }else{
+
+
     return (
         <>
 <section >
@@ -149,6 +175,8 @@ function Profile() {
 
         </>
     )
+  }
+
 }
 
 export default Profile
