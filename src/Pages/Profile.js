@@ -19,13 +19,8 @@ function Profile() {
 
   },[isLoggedIn]
   )
+  
 
-  if(!isLoggedIn){
-    console.log(isLoggedIn)
-    return <Navigate replace to="/login" />
-
-
-  }else{
 
 
     return (
@@ -175,7 +170,7 @@ function Profile() {
 
         </>
     )
-  }
+  
 
 }
 

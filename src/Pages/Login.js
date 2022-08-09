@@ -4,6 +4,10 @@ import { useNavigate, Link } from 'react-router-dom'
 
 
 function Login() {
+
+  
+
+
   const navigate = useNavigate();
   // const handleOnClick = useCallback(() => navigate('/profile', {replace: true}), [navigate]);
   const [error, setError] = useState(null);
@@ -13,10 +17,9 @@ function Login() {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(null);
-
-
-
-
+  const [user, setUser] = useState(null);
+  
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
     if(username === "" || password === ""){
@@ -58,6 +61,7 @@ function Login() {
 
   return (
     <>
+    
       <div className="container">
 
 {loginError &&
@@ -105,7 +109,7 @@ function Login() {
               <div className="row mt-2">
                 <div className="col-12">
                 
-                  <button type="submit" className="btn btn-primary">Login</button>
+                  <button type="submit" className="btn btn-primary" >Login</button>
                 </div>
               </div>
 
